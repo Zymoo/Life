@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Life.Models
 {
-    public class Cell
+    public class Cell : INotifyPropertyChanged
     {
-        public bool Status { get; set; }
+        private bool status;
+        public bool Status {
+            get { return status; }
+            set {
+                this.status = value;
+                this.NotifyPropertyChanged("Status");
+                }
+        }
         public Cell()
         {
             Status = false;
@@ -19,6 +27,13 @@ namespace Life.Models
             Status = alive;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
         public void ChangeStatus()
         {
             if (Status)
@@ -26,6 +41,7 @@ namespace Life.Models
                 Status = false;
             }
             else Status = true;
+            NotifyPropertyChanged("Status");
         }
 
     }

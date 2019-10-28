@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MyConverter.cs" />
     <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\Game.cs" />
     <Page Include="FieldControl.xaml">

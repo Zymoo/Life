@@ -25,7 +25,7 @@ namespace Life
         private int height;
         private bool run;
         private Game game;
-        private List<Cell> cells;
+        private Cell[,] cells;
 
         public MainWindow()
         {
@@ -35,7 +35,6 @@ namespace Life
             TryGivenDimensions();
             SetUpBoard(width, height);
             run = false;
-            cells = new List<Cell>();
         }
 
         private void TryGivenDimensions()
@@ -54,9 +53,18 @@ namespace Life
 
         private void SetUpBoard(int x, int y)
         {
+            cells = new Cell[width, height];
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    cells[i, j] = new Cell();
+                }
+            }
+
             BoardGrid.ColumnDefinitions.Clear();
             BoardGrid.RowDefinitions.Clear();
-            game = new Game(width, height);
+            game = new Game(cells);
 
             for (int i = 0; i < y; i++)
             {
@@ -71,13 +79,16 @@ namespace Life
                     Button button = new Button
                     {
                        // Background = new SolidColorBrush(Colors.AliceBlue),
-                        Content = "0",
+                        //Content = "0",
                         Margin = new Thickness(0),
                         Style = FindResource("FieldStyle") as Style
                     };
                     button.Click += new RoutedEventHandler(ButtonChosen);
-                    Binding binding = new Binding("Background");
-                    //binding.Source = cells.
+                    Binding binding = new Binding("Status");
+                    binding.Source = cells[i, j];
+                    binding.Converter = new MyConverter();
+                    binding.Mode = BindingMode.TwoWay;
+                    button.SetBinding(Button.ContentProperty, binding);
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     BoardGrid.Children.Add(button);
@@ -94,7 +105,7 @@ namespace Life
                 button.Background = new SolidColorBrush(Colors.Blue);
             }
             else button.Background = new SolidColorBrush(Colors.AliceBlue);
-            button.Content = ChangeFieldState(button.Content.ToString());
+            //button.Content = ChangeFieldState(button.Content.ToString());
             game.ChangeCell(Grid.GetRow(button), Grid.GetColumn(button));
         }
 
@@ -115,6 +126,7 @@ namespace Life
         private void NextTurn()
         {
             game.PlayNextTurn();
+            /*
             foreach (Button button in BoardGrid.Children)
             {
                 if (game.GetCellStatus(Grid.GetRow(button), Grid.GetColumn(button)))
@@ -128,6 +140,7 @@ namespace Life
                     button.Background = new SolidColorBrush(Colors.AliceBlue);
                 }
             }
+            */
         }
         private async void RunButton_Click(object sender, RoutedEventArgs e)
         {

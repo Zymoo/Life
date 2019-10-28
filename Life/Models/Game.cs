@@ -23,6 +23,11 @@ namespace Life.Models
             }
         }
 
+        public Game(Cell [,] c)
+        {
+            cells = c;
+        }
+
         public void PlayNextTurn()
         {
             cells = GetNextState();
@@ -50,7 +55,14 @@ namespace Life.Models
                     nextCells[i, j] = new Cell(Survive(i, j));
                 }
             }
-            return nextCells;
+            for (int i = 0; i < cells.GetLength(0); i++)
+            {
+                for (int j = 0; j < cells.GetLength(1); j++)
+                {
+                    cells[i, j].Status = nextCells[i, j].Status;
+                }
+            }
+            return cells;
         }
 
         private bool Survive(int i, int j)
