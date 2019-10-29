@@ -21,8 +21,10 @@ namespace Life
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int width;
-        private int height;
+        private const int maxWidth = 40;
+        private const int maxHeight = 30;
+        private int width = 20;
+        private int height = 20;
         private bool run;
         private Game game;
         private Cell[,] cells;
@@ -30,24 +32,21 @@ namespace Life
         public MainWindow()
         {
             InitializeComponent();
-            width = 10;
-            height = 10;
-            TryGivenDimensions();
             SetUpBoard(width, height);
             run = false;
         }
 
         private void TryGivenDimensions()
         {
-            if (!int.TryParse(widthField.Text, out width) || width > 40)
+            if (!int.TryParse(widthField.Text, out width) || width > maxWidth)
             {
-                width = 10;
-                MessageBox.Show("Wrong width! Max width is 40!");
+                width = maxWidth;
+                MessageBox.Show("Wrong width!");
             }
-            if (!int.TryParse(heightField.Text, out height) || height > 20)
+            if (!int.TryParse(heightField.Text, out height) || height > maxHeight)
             {
-                height = 10;
-                MessageBox.Show("Wrong height! Max height is 20!");
+                height = maxHeight;
+                MessageBox.Show("Wrong height!");
             }
         }
 
@@ -61,10 +60,10 @@ namespace Life
                     cells[i, j] = new Cell();
                 }
             }
+            game = new Game(cells);
 
             BoardGrid.ColumnDefinitions.Clear();
             BoardGrid.RowDefinitions.Clear();
-            game = new Game(cells);
 
             for (int i = 0; i < y; i++)
             {
@@ -78,44 +77,34 @@ namespace Life
                 {
                     Button button = new Button
                     {
-                       // Background = new SolidColorBrush(Colors.AliceBlue),
-                        //Content = "0",
                         Margin = new Thickness(0),
                         Style = FindResource("FieldStyle") as Style
                     };
                     button.Click += new RoutedEventHandler(ButtonChosen);
                     Binding binding = new Binding("Status");
                     binding.Source = cells[i, j];
-                    binding.Converter = new MyConverter();
+                    binding.Converter = new MyBackgroundConverter();
                     binding.Mode = BindingMode.TwoWay;
-                    button.SetBinding(Button.ContentProperty, binding);
+                    button.SetBinding(Button.BackgroundProperty, binding);
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     BoardGrid.Children.Add(button);
                 }
-                
             }
         }
 
         private void ButtonChosen(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            if (button.Content.ToString().Equals("0"))
+            /*
+            if (button.Background.Equals(Colors.AliceBlue))
             {
                 button.Background = new SolidColorBrush(Colors.Blue);
             }
             else button.Background = new SolidColorBrush(Colors.AliceBlue);
+            */
             //button.Content = ChangeFieldState(button.Content.ToString());
             game.ChangeCell(Grid.GetRow(button), Grid.GetColumn(button));
-        }
-
-        private string ChangeFieldState(string prevState)
-        {
-            if (prevState.Equals("0"))
-            {
-                return "1";
-            }
-            else return "0";
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)

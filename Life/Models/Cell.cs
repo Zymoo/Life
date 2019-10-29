@@ -38,9 +38,9 @@ namespace Life.Models
         {
             if (Status)
             {
-                Status = false;
+                status = false;
             }
-            else Status = true;
+            else status = true;
             NotifyPropertyChanged("Status");
         }
 

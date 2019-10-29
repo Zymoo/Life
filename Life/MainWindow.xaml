@@ -11,9 +11,9 @@
             <Grid x:Name="BoardGrid" HorizontalAlignment="Center"  VerticalAlignment="Center">
             </Grid>
         </DockPanel>
-        <TextBox x:Name="widthField" HorizontalAlignment="Left" Height="23" Margin="128,350,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="widthField" HorizontalAlignment="Left" Height="23" Margin="128,350,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="120"/>
         <Label Content="Dimensions:" HorizontalAlignment="Left" Margin="35,347,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="heightField" HorizontalAlignment="Left" Height="23" Margin="274,350,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="heightField" HorizontalAlignment="Left" Height="23" Margin="274,350,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="120"/>
         <Button Content="Change dimensions!" HorizontalAlignment="Left" Margin="423,350,0,0" VerticalAlignment="Top" Width="146" RenderTransformOrigin="0.062,0.6" Click="Button_Click"/>
         <Button x:Name="nextButton" Content="Next!" HorizontalAlignment="Left" Margin="596,350,0,0" VerticalAlignment="Top" Width="75" Click="NextButton_Click"/>
         <Button x:Name="runButton" Content="Run!" HorizontalAlignment="Left" Margin="694,350,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click"/>
@@ -21,6 +21,7 @@
     </Grid>
     <Window.Resources>
         <Style TargetType="{x:Type Button}" x:Key="FieldStyle">
+            <Setter Property="MinHeight" Value="15"/>
             <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="AliceBlue"/>
@@ -29,16 +30,10 @@
                     <EventTrigger.Actions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="Violet" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="AliceBlue" />
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="1.0" To="0.0" Duration="0:0:0.1" 
+                                    AutoReverse="True" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger.Actions>
