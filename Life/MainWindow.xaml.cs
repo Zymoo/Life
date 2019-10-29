@@ -1,6 +1,9 @@
 ﻿using Life.Models;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,6 +67,15 @@ namespace Life
             CreateBoardGrid(x, y);
         }
 
+        private void SetUpBoard(int rows, int columns, List<Cell> cells)
+        {
+            this.cells = cells;
+            this.rows = rows;
+            this.columns = columns;
+            game = new GameLife(cells, columns, rows);
+            CreateBoardGrid(rows, columns);
+        }
+
         private void CreateBoardGrid(int x, int y)
         {
             BoardGrid.ColumnDefinitions.Clear();
@@ -86,10 +98,12 @@ namespace Life
                     Style = FindResource("FieldStyle") as Style
                 };
                 button.Click += new RoutedEventHandler(ButtonChosen);
-                Binding binding = new Binding("Status");
-                binding.Source = cell;
-                binding.Converter = new MyBackgroundConverter();
-                binding.Mode = BindingMode.TwoWay;
+                Binding binding = new Binding("Status")
+                {
+                    Source = cell,
+                    Converter = new MyBackgroundConverter(),
+                    Mode = BindingMode.TwoWay
+                };
                 button.SetBinding(Button.BackgroundProperty, binding);
                 Grid.SetRow(button, cell.X);
                 Grid.SetColumn(button, cell.Y);
@@ -159,7 +173,42 @@ namespace Life
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            string json = JsonConvert.SerializeObject(cells);
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using(FileStream stream = File.Create(saveFileDialog.FileName))
+                {
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        writer.WriteLine(this.rows);
+                        writer.WriteLine(this.columns);
+                        writer.WriteLine(json);
+                    }
+                }
+            }
+        }
 
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            string json = "";
+            List<Cell> newCells = new List<Cell>();
+            int newRows = 0;
+            int newColumns = 0;
+            if (openFileDialog.ShowDialog() == true) {
+                using (FileStream stream = File.OpenRead(openFileDialog.FileName))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        newRows = int.Parse(reader.ReadLine());
+                        newColumns = int.Parse(reader.ReadLine());
+                        json = reader.ReadLine();
+                    }
+                }
+            }
+            newCells = JsonConvert.DeserializeObject<List<Cell>>(json);
+            SetUpBoard(newRows, newColumns, newCells);
         }
     }
 }

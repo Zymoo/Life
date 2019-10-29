@@ -10,12 +10,12 @@ namespace Life.Models
     {
 
         private List<Cell> cells;
-        private int rows;
-        private int columns;
+        private readonly int rows;
+        private readonly int columns;
 
         public GameLife(List<Cell> c, int x, int y)
         {
-            cells = c;
+            this.cells = c;
             this.rows = x;
             this.columns = y;
         }

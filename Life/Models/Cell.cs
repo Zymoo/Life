@@ -36,6 +36,11 @@ namespace Life.Models
             Status = alive;
         }
 
+        public Cell()
+        {
+            Status = false;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(string propName)

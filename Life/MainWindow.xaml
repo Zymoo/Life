@@ -24,7 +24,7 @@
         <Button x:Name="runButton" Content="Run" HorizontalAlignment="Left" Margin="266,204,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click" Grid.Column="1"/>
         <Button x:Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="266,241,0,0" VerticalAlignment="Top" Width="75" Click="StopButton_Click" Grid.Column="1"/>
         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="266,89,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="SaveButton_Click"/>
-        <Button x:Name="loadButton" Content="Load" HorizontalAlignment="Left" Margin="266,131,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+        <Button x:Name="loadButton" Content="Load" HorizontalAlignment="Left" Margin="266,131,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="LoadButton_Click"/>
     </Grid>
     <Window.Resources>
         <Style TargetType="{x:Type Button}" x:Key="FieldStyle">
