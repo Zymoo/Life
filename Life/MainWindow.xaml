@@ -14,12 +14,25 @@
         </DockPanel>
         <Button Content="Change dimensions!" HorizontalAlignment="Left" Margin="379,349,0,0" VerticalAlignment="Top" Width="146" Command="ApplicationCommands.New" Height="42"/>
         <Button x:Name="nextButton" Content="Next" HorizontalAlignment="Left" Margin="633,60,0,0" VerticalAlignment="Top" Width="75" Click="NextButton_Click"/>
-        <Button x:Name="runButton" Content="Run" HorizontalAlignment="Left" Margin="633,214,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click"/>
-        <Button x:Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="633,234,0,0" VerticalAlignment="Top" Width="75" Click="StopButton_Click"/>
+        <Button x:Name="runButton" Content="Run" HorizontalAlignment="Left" Margin="633,164,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click"/>
+        <Button x:Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="633,184,0,0" VerticalAlignment="Top" Width="75" Click="StopButton_Click"/>
         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="633,99,0,0" VerticalAlignment="Top" Width="75" Click="SaveButton_Click"/>
-        <Button x:Name="loadButton" Content="Load" HorizontalAlignment="Left" Margin="633,141,0,0" VerticalAlignment="Top" Width="75" Click="LoadButton_Click"/>
+        <Button x:Name="loadButton" Content="Load" HorizontalAlignment="Left" Margin="633,119,0,0" VerticalAlignment="Top" Width="75" Click="LoadButton_Click"/>
         <local:DimensionControl x:Name="dimensionControl" HorizontalAlignment="Left" Height="42" Margin="58,349,0,0" VerticalAlignment="Top" Width="285"/>
-        <Label x:Name="statusLabel" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="633,259,0,0" VerticalAlignment="Top" Width="75" Height="28"/>
+        <Label x:Name="statusLabel" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="633,209,0,0" VerticalAlignment="Top" Width="75" Height="28"/>
+        <Label Content="Cells needed for resurection:" HorizontalAlignment="Left" Margin="596,267,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="reviveCellBox" HorizontalAlignment="Left" Margin="613,298,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ReviveCellBox_SelectionChanged">
+            <ComboBoxItem Content="1"/>
+            <ComboBoxItem Content="2"/>
+            <ComboBoxItem Content="3"/>
+            <ComboBoxItem Content="4"/>
+            <ComboBoxItem Content="5"/>
+            <ComboBoxItem Content="6"/>
+            <ComboBoxItem Content="7"/>
+            <ComboBoxItem Content="8"/>
+        </ComboBox>
+        <Button x:Name="gliderButton" Content="Glider" HorizontalAlignment="Left" Margin="633,334,0,0" VerticalAlignment="Top" Width="75" Click="GliderButton_Click"/>
+        <Button x:Name="spaceButton" Content="SpaceShip" HorizontalAlignment="Left" Margin="633,360,0,0" VerticalAlignment="Top" Width="75" Click="SpaceButton_Click"/>
     </Grid>
 
     <Window.CommandBindings>

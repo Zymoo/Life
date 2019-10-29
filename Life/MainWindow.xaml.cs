@@ -122,13 +122,9 @@ namespace Life
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            NextTurn();
-        }
-
-        private void NextTurn()
-        {
             game.PlayNextTurn();
         }
+
         private async void RunButton_Click(object sender, RoutedEventArgs e)
         {
             DisableButtons();
@@ -137,7 +133,7 @@ namespace Life
             statusLabel.Content = status;
             while (status.Running)
             {
-                NextTurn();
+                game.PlayNextTurn();
                 await Task.Delay(500);
             }
             statusLabel.Content = status;
@@ -149,6 +145,7 @@ namespace Life
             saveButton.IsEnabled = false;
             loadButton.IsEnabled = false;
             runButton.IsEnabled = false;
+            reviveCellBox.IsEnabled = false;
         }
 
         private void EnableButtons()
@@ -157,6 +154,7 @@ namespace Life
             saveButton.IsEnabled = true;
             loadButton.IsEnabled = true;
             runButton.IsEnabled = true;
+            reviveCellBox.IsEnabled = true;
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
@@ -220,6 +218,21 @@ namespace Life
 
             TryGivenDimensions();
             SetUpBoard(rows, columns);
+        }
+
+        private void ReviveCellBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            game.Resurection = reviveCellBox.SelectedIndex + 1;
+        }
+
+        private void GliderButton_Click(object sender, RoutedEventArgs e)
+        {
+            game.Glider();
+        }
+
+        private void SpaceButton_Click(object sender, RoutedEventArgs e)
+        {
+            game.SpaceShip();
         }
     }
 }

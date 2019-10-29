@@ -5,13 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Life.Models
-{
+{   
     class GameLife
     {
 
         private List<Cell> cells;
         private readonly int rows;
         private readonly int columns;
+        private int resurection = 3;
+
+        public int Resurection { get => resurection; set => resurection = value; }
 
         public GameLife(List<Cell> c, int rows, int columns)
         {
@@ -71,9 +74,32 @@ namespace Life.Models
             {
                 return (aliveNeighbours == 3 || aliveNeighbours == 2);
             }
-            else return aliveNeighbours == 3;
-
-
+            else return aliveNeighbours == resurection;
         }
+
+        public void Glider()
+        {
+            foreach (Cell c in cells)
+            {
+                if((c.X == 0 && c.Y == 2) || (c.X == 1 && c.Y == 2) || (c.X == 2 && c.Y == 2) || (c.X == 1 && c.Y == 0) || (c.X == 2 && c.Y == 1)){
+                    c.Status = true;
+                }
+            }
+        }
+
+        public void SpaceShip()
+        {
+            foreach (Cell c in cells)
+            {
+                if ((c.X == 1 && c.Y == 2) || (c.X == 1 && c.Y == 3) || 
+                    (c.X == 2 && c.Y == 0) || (c.X == 2 && c.Y == 1) || (c.X == 2 && c.Y == 3) || (c.X == 2 && c.Y == 4) ||
+                    (c.X == 3 && c.Y == 0) || (c.X == 3 && c.Y == 1) || (c.X == 3 && c.Y == 2) || (c.X == 3 && c.Y == 3) ||
+                    (c.X == 4 && c.Y == 1) || (c.X == 4 && c.Y == 2))
+                {
+                    c.Status = true;
+                }
+            }
+        }
+
     }
 }
