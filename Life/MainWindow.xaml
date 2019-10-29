@@ -57,13 +57,6 @@
                 </TextBlock>
             </Border>
         </DataTemplate>
-
-
-        <DataTemplate x:Key="MyHeloTemplate">
-            <Border BorderBrush="Tomato" BorderThickness='2' Padding='2'>
-                <TextBlock Text="{Binding Path=Title}" FontSize="20"/>
-            </Border>
-        </DataTemplate>
     </Window.Resources>
 </Window>
     

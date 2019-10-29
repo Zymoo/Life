@@ -19,7 +19,7 @@ namespace Life
                     return "Running";
                 }
             }
-            return "Running";
+            return "Stopped";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
