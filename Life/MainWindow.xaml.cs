@@ -28,43 +28,45 @@ namespace Life
         private const int maxHeight = 30;
         private int columns = 20;
         private int rows = 20;
-        private bool run;
         private GameLife game;
         private List<Cell> cells;
+        private Status status;
 
         public MainWindow()
         {
             InitializeComponent();
             SetUpBoard(columns, rows);
-            run = false;
+            status = new Status();
+            statusLabel.Content = status;
+            stopButton.IsEnabled = false;
         }
 
         private void TryGivenDimensions()
         {
-            if (!int.TryParse(widthField.Text, out columns) || columns > maxWidth)
+            if (!int.TryParse(dimensionControl.widthText.Text, out columns) || columns > maxWidth || columns < 5)
             {
                 columns = maxWidth;
                 MessageBox.Show("Wrong width!");
             }
-            if (!int.TryParse(heightField.Text, out rows) || rows > maxHeight)
+            if (!int.TryParse(dimensionControl.heightText.Text, out rows) || rows > maxHeight || rows < 5)
             {
                 rows = maxHeight;
                 MessageBox.Show("Wrong height!");
             }
         }
 
-        private void SetUpBoard(int x, int y)
+        private void SetUpBoard(int rows, int columns)
         {
             cells = new List<Cell>();
-            for (int i = 0; i < columns; i++)
+            for (int i = 0; i < this.columns; i++)
             {
-                for (int j = 0; j < rows; j++)
+                for (int j = 0; j < this.rows; j++)
                 {
                     cells.Add(new Cell(i, j));
                 }
             }
-            game = new GameLife(cells, columns, rows);
-            CreateBoardGrid(x, y);
+            game = new GameLife(cells, this.rows, this.columns);
+            CreateBoardGrid(rows, columns);
         }
 
         private void SetUpBoard(int rows, int columns, List<Cell> cells)
@@ -76,16 +78,16 @@ namespace Life
             CreateBoardGrid(rows, columns);
         }
 
-        private void CreateBoardGrid(int x, int y)
+        private void CreateBoardGrid(int rows, int columns)
         {
             BoardGrid.ColumnDefinitions.Clear();
             BoardGrid.RowDefinitions.Clear();
 
-            for (int i = 0; i < x; i++)
+            for (int i = 0; i < rows; i++)
             {
                 BoardGrid.RowDefinitions.Add(new RowDefinition());
             }
-            for (int i = 0; i < y; i++)
+            for (int i = 0; i < columns; i++)
             {
                 BoardGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
@@ -115,14 +117,6 @@ namespace Life
         private void ButtonChosen(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            /*
-            if (button.Background.Equals(Colors.AliceBlue))
-            {
-                button.Background = new SolidColorBrush(Colors.Blue);
-            }
-            else button.Background = new SolidColorBrush(Colors.AliceBlue);
-            */
-            //button.Content = ChangeFieldState(button.Content.ToString());
             game.ChangeCell(Grid.GetRow(button), Grid.GetColumn(button));
         }
 
@@ -134,41 +128,42 @@ namespace Life
         private void NextTurn()
         {
             game.PlayNextTurn();
-            /*
-            foreach (Button button in BoardGrid.Children)
-            {
-                if (game.GetCellStatus(Grid.GetRow(button), Grid.GetColumn(button)))
-                {
-                    button.Content = "1";
-                    button.Background = new SolidColorBrush(Colors.Blue);
-                }
-                else
-                {
-                    button.Content = "0";
-                    button.Background = new SolidColorBrush(Colors.AliceBlue);
-                }
-            }
-            */
         }
         private async void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            run = true;
-            while (run)
+            DisableButtons();
+            stopButton.IsEnabled = true;
+            status.Running = true;
+            statusLabel.Content = status;
+            while (status.Running)
             {
                 NextTurn();
                 await Task.Delay(500);
             }
+            statusLabel.Content = status;
+        }
+
+        private void DisableButtons()
+        {
+            nextButton.IsEnabled = false;
+            saveButton.IsEnabled = false;
+            loadButton.IsEnabled = false;
+            runButton.IsEnabled = false;
+        }
+
+        private void EnableButtons()
+        {
+            nextButton.IsEnabled = true;
+            saveButton.IsEnabled = true;
+            loadButton.IsEnabled = true;
+            runButton.IsEnabled = true;
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            run = false;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            TryGivenDimensions();
-            SetUpBoard(columns, rows);
+            status.Running = false;
+            EnableButtons();
+            stopButton.IsEnabled = false;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -209,6 +204,22 @@ namespace Life
             }
             newCells = JsonConvert.DeserializeObject<List<Cell>>(json);
             SetUpBoard(newRows, newColumns, newCells);
+        }
+
+        private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (status.Running)
+            {
+                e.CanExecute = false;
+            }
+            else e.CanExecute = true;
+        }
+
+        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+            TryGivenDimensions();
+            SetUpBoard(rows, columns);
         }
     }
 }

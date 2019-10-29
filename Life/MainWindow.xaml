@@ -7,26 +7,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="197*"/>
-            <ColumnDefinition Width="199*"/>
-        </Grid.ColumnDefinitions>
         <DockPanel Margin="35,50,223,100" Grid.ColumnSpan="2">
             <Border BorderThickness="5" BorderBrush="Black" HorizontalAlignment="Center"  VerticalAlignment="Stretch">
                 <Grid x:Name="BoardGrid"/>
             </Border>
         </DockPanel>
-        <TextBox x:Name="widthField" HorizontalAlignment="Left" Height="23" Margin="128,350,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Dimensions:" HorizontalAlignment="Left" Margin="35,347,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="heightField" HorizontalAlignment="Left" Height="23" Margin="274,350,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Change dimensions!" HorizontalAlignment="Left" Margin="29,350,0,0" VerticalAlignment="Top" Width="146" RenderTransformOrigin="0.062,0.6" Click="Button_Click" Grid.Column="1"/>
-        <Button x:Name="nextButton" Content="Next" HorizontalAlignment="Left" Margin="266,50,0,0" VerticalAlignment="Top" Width="75" Click="NextButton_Click" Grid.Column="1"/>
-        <Button x:Name="runButton" Content="Run" HorizontalAlignment="Left" Margin="266,204,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click" Grid.Column="1"/>
-        <Button x:Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="266,241,0,0" VerticalAlignment="Top" Width="75" Click="StopButton_Click" Grid.Column="1"/>
-        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="266,89,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="SaveButton_Click"/>
-        <Button x:Name="loadButton" Content="Load" HorizontalAlignment="Left" Margin="266,131,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="LoadButton_Click"/>
+        <Button Content="Change dimensions!" HorizontalAlignment="Left" Margin="379,349,0,0" VerticalAlignment="Top" Width="146" Command="ApplicationCommands.New" Height="42"/>
+        <Button x:Name="nextButton" Content="Next" HorizontalAlignment="Left" Margin="633,60,0,0" VerticalAlignment="Top" Width="75" Click="NextButton_Click"/>
+        <Button x:Name="runButton" Content="Run" HorizontalAlignment="Left" Margin="633,214,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click"/>
+        <Button x:Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="633,234,0,0" VerticalAlignment="Top" Width="75" Click="StopButton_Click"/>
+        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="633,99,0,0" VerticalAlignment="Top" Width="75" Click="SaveButton_Click"/>
+        <Button x:Name="loadButton" Content="Load" HorizontalAlignment="Left" Margin="633,141,0,0" VerticalAlignment="Top" Width="75" Click="LoadButton_Click"/>
+        <local:DimensionControl x:Name="dimensionControl" HorizontalAlignment="Left" Height="42" Margin="58,349,0,0" VerticalAlignment="Top" Width="285"/>
+        <Label x:Name="statusLabel" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="633,259,0,0" VerticalAlignment="Top" Width="75" Height="28"/>
     </Grid>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="NewCommand_Executed" CanExecute="NewCommand_CanExecute" />
+    </Window.CommandBindings>
+
     <Window.Resources>
+
+        <local:MyConverter x:Key="MyConverter" />
+
         <Style TargetType="{x:Type Button}" x:Key="FieldStyle">
             <Setter Property="MinHeight" Value="15"/>
             <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
@@ -47,6 +50,20 @@
                 </EventTrigger>
             </Style.Triggers>
         </Style>
+
+        <DataTemplate DataType='{x:Type local:Status}'>
+            <Border BorderBrush="Tomato" BorderThickness='1'>
+                <TextBlock Text="{Binding Path=Running, Converter={StaticResource MyConverter}}" Foreground="Green">
+                </TextBlock>
+            </Border>
+        </DataTemplate>
+
+
+        <DataTemplate x:Key="MyHeloTemplate">
+            <Border BorderBrush="Tomato" BorderThickness='2' Padding='2'>
+                <TextBlock Text="{Binding Path=Title}" FontSize="20"/>
+            </Border>
+        </DataTemplate>
     </Window.Resources>
 </Window>
     

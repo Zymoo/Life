@@ -16,22 +16,22 @@ namespace Life
             {
                 if ((bool)value)
                 {
-                    return "1";
+                    return "Running";
                 }
             }
-            return "0";
+            return "Running";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value is string)
             {
-                if (((string)value).Equals("0"))
+                if (((string)value).Equals("Running"))
                     return false;
                 else
                     return true;
             }
-            return false;
+            return true;
         }
     }
 }

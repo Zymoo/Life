@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace Life
 {
     /// <summary>
-    /// Interaction logic for FieldControl.xaml
+    /// Interaction logic for DimensionControl.xaml
     /// </summary>
-    public partial class FieldControl : UserControl
+    public partial class DimensionControl : UserControl
     {
-        public FieldControl()
+        public DimensionControl()
         {
             InitializeComponent();
-        }
-
-        private void ChangeStateButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

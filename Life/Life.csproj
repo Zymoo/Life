@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DimensionControl.xaml.cs">
+      <DependentUpon>DimensionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\BasicCell.cs" />
     <Compile Include="Models\CoordinatesCalculator.cs" />
     <Compile Include="Models\GameLife.cs" />
@@ -67,6 +70,11 @@
     <Compile Include="MyConverter.cs" />
     <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Status.cs" />
+    <Page Include="DimensionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FieldControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

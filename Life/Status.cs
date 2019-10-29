@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Life
+{
+    public class Status
+    {
+        private bool running;
+        public bool Running { get => running; set => running = value; }
+        public Status()
+        {
+            running = false;
+        }
+    }
+}

@@ -13,11 +13,11 @@ namespace Life.Models
         private readonly int rows;
         private readonly int columns;
 
-        public GameLife(List<Cell> c, int x, int y)
+        public GameLife(List<Cell> c, int rows, int columns)
         {
             this.cells = c;
-            this.rows = x;
-            this.columns = y;
+            this.rows = rows;
+            this.columns = columns;
         }
 
         public void PlayNextTurn()

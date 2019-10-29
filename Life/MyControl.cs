@@ -44,7 +44,7 @@ namespace Life
     ///     <MyNamespace:MyControl/>
     ///
     /// </summary>
-    public class MyControl : ContentControl
+    public class MyControl : Button
     {
         static MyControl()
         {
