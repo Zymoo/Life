@@ -23,73 +23,78 @@ namespace Life
     {
         private const int maxWidth = 40;
         private const int maxHeight = 30;
-        private int width = 20;
-        private int height = 20;
+        private int columns = 20;
+        private int rows = 20;
         private bool run;
-        private Game game;
-        private Cell[,] cells;
+        private GameLife game;
+        private List<Cell> cells;
 
         public MainWindow()
         {
             InitializeComponent();
-            SetUpBoard(width, height);
+            SetUpBoard(columns, rows);
             run = false;
         }
 
         private void TryGivenDimensions()
         {
-            if (!int.TryParse(widthField.Text, out width) || width > maxWidth)
+            if (!int.TryParse(widthField.Text, out columns) || columns > maxWidth)
             {
-                width = maxWidth;
+                columns = maxWidth;
                 MessageBox.Show("Wrong width!");
             }
-            if (!int.TryParse(heightField.Text, out height) || height > maxHeight)
+            if (!int.TryParse(heightField.Text, out rows) || rows > maxHeight)
             {
-                height = maxHeight;
+                rows = maxHeight;
                 MessageBox.Show("Wrong height!");
             }
         }
 
         private void SetUpBoard(int x, int y)
         {
-            cells = new Cell[width, height];
-            for (int i = 0; i < width; i++)
+            cells = new List<Cell>();
+            for (int i = 0; i < columns; i++)
             {
-                for (int j = 0; j < height; j++)
+                for (int j = 0; j < rows; j++)
                 {
-                    cells[i, j] = new Cell();
+                    cells.Add(new Cell(i, j));
                 }
             }
-            game = new Game(cells);
+            game = new GameLife(cells, columns, rows);
+            CreateBoardGrid(x, y);
+        }
 
+        private void CreateBoardGrid(int x, int y)
+        {
             BoardGrid.ColumnDefinitions.Clear();
             BoardGrid.RowDefinitions.Clear();
 
+            for (int i = 0; i < x; i++)
+            {
+                BoardGrid.RowDefinitions.Add(new RowDefinition());
+            }
             for (int i = 0; i < y; i++)
             {
                 BoardGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            for (int i = 0; i < x; i++)
+            foreach (Cell cell in cells)
             {
-                BoardGrid.RowDefinitions.Add(new RowDefinition());
-                for (int j = 0; j < y; j++)
+                Button button = new Button
                 {
-                    Button button = new Button
-                    {
-                        Margin = new Thickness(0),
-                        Style = FindResource("FieldStyle") as Style
-                    };
-                    button.Click += new RoutedEventHandler(ButtonChosen);
-                    Binding binding = new Binding("Status");
-                    binding.Source = cells[i, j];
-                    binding.Converter = new MyBackgroundConverter();
-                    binding.Mode = BindingMode.TwoWay;
-                    button.SetBinding(Button.BackgroundProperty, binding);
-                    Grid.SetRow(button, i);
-                    Grid.SetColumn(button, j);
-                    BoardGrid.Children.Add(button);
-                }
+                    Margin = new Thickness(0),
+                    Style = FindResource("FieldStyle") as Style
+                };
+                button.Click += new RoutedEventHandler(ButtonChosen);
+                Binding binding = new Binding("Status");
+                binding.Source = cell;
+                binding.Converter = new MyBackgroundConverter();
+                binding.Mode = BindingMode.TwoWay;
+                button.SetBinding(Button.BackgroundProperty, binding);
+                Grid.SetRow(button, cell.X);
+                Grid.SetColumn(button, cell.Y);
+                BoardGrid.Children.Add(button);
+
             }
         }
 
@@ -149,7 +154,12 @@ namespace Life
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             TryGivenDimensions();
-            SetUpBoard(width, height);
+            SetUpBoard(columns, rows);
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

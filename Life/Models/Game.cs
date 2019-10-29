@@ -10,7 +10,7 @@ namespace Life.Models
     {
 
         private Cell[,] cells;
-
+        /*
         public Game(int x, int y)
         {
             cells = new Cell[x, y];
@@ -22,7 +22,7 @@ namespace Life.Models
                 }
             }
         }
-
+        */
         public Game(Cell [,] c)
         {
             cells = c;

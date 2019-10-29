@@ -7,17 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <DockPanel  Margin="35,50,35,100">
-            <Grid x:Name="BoardGrid" HorizontalAlignment="Center"  VerticalAlignment="Center">
-            </Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="197*"/>
+            <ColumnDefinition Width="199*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Margin="35,50,223,100" Grid.ColumnSpan="2">
+            <Border BorderThickness="5" BorderBrush="Black" HorizontalAlignment="Center"  VerticalAlignment="Stretch">
+                <Grid x:Name="BoardGrid"/>
+            </Border>
         </DockPanel>
         <TextBox x:Name="widthField" HorizontalAlignment="Left" Height="23" Margin="128,350,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="120"/>
         <Label Content="Dimensions:" HorizontalAlignment="Left" Margin="35,347,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="heightField" HorizontalAlignment="Left" Height="23" Margin="274,350,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Change dimensions!" HorizontalAlignment="Left" Margin="423,350,0,0" VerticalAlignment="Top" Width="146" RenderTransformOrigin="0.062,0.6" Click="Button_Click"/>
-        <Button x:Name="nextButton" Content="Next!" HorizontalAlignment="Left" Margin="596,350,0,0" VerticalAlignment="Top" Width="75" Click="NextButton_Click"/>
-        <Button x:Name="runButton" Content="Run!" HorizontalAlignment="Left" Margin="694,350,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click"/>
-        <Button x:Name="stopButton" Content="Stop!" HorizontalAlignment="Left" Margin="694,375,0,0" VerticalAlignment="Top" Width="75" Click="StopButton_Click"/>
+        <Button Content="Change dimensions!" HorizontalAlignment="Left" Margin="29,350,0,0" VerticalAlignment="Top" Width="146" RenderTransformOrigin="0.062,0.6" Click="Button_Click" Grid.Column="1"/>
+        <Button x:Name="nextButton" Content="Next" HorizontalAlignment="Left" Margin="266,50,0,0" VerticalAlignment="Top" Width="75" Click="NextButton_Click" Grid.Column="1"/>
+        <Button x:Name="runButton" Content="Run" HorizontalAlignment="Left" Margin="266,204,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click" Grid.Column="1"/>
+        <Button x:Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="266,241,0,0" VerticalAlignment="Top" Width="75" Click="StopButton_Click" Grid.Column="1"/>
+        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="266,89,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="SaveButton_Click"/>
+        <Button x:Name="loadButton" Content="Load" HorizontalAlignment="Left" Margin="266,131,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
     </Grid>
     <Window.Resources>
         <Style TargetType="{x:Type Button}" x:Key="FieldStyle">

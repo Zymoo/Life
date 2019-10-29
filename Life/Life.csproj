@@ -58,6 +58,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\BasicCell.cs" />
+    <Compile Include="Models\CoordinatesCalculator.cs" />
+    <Compile Include="Models\GameLife.cs" />
     <Compile Include="MyBackgroundConverter.cs" />
     <Compile Include="MyConverter.cs" />
     <Compile Include="Models\Cell.cs" />

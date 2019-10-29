@@ -10,6 +10,9 @@ namespace Life.Models
     public class Cell : INotifyPropertyChanged
     {
         private bool status;
+        private int x;
+        private int y;
+
         public bool Status {
             get { return status; }
             set {
@@ -17,9 +20,15 @@ namespace Life.Models
                 this.NotifyPropertyChanged("Status");
                 }
         }
-        public Cell()
+
+        public int X { get => x; set => x = value; }
+        public int Y { get => y; set => y = value; }
+
+        public Cell(int x, int y)
         {
             Status = false;
+            this.X = x;
+            this.Y = y;
         }
 
         public Cell(bool alive)
